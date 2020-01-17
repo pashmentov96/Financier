@@ -30,9 +30,10 @@ function validateDate(date) {
 }
 
 function addRecord(object) {
-    console.log(window.records);
     records.add(object);
-    console.log(window.records);
+    fillStatistics();
+    localStorage.setItem("RECORDS", records.toString());
+    console.log(records);
 }
 
 function getTypeCheckedButton() {

@@ -1,7 +1,6 @@
 #main {
     float: left;
-    width: 60%;
-    border-style: solid;
+    width: 55%;
     border-color: red;
     border-width: 2px;
 }
@@ -26,6 +25,22 @@ input, .label_left, #errors {
     margin-left: 10px;
 }
 
-#errors {
+#errors, .negative {
     color: red;
+}
+
+.record {
+    height: 30px;
+    border-bottom-style: solid;
+    border-bottom-color: grey;
+    border-bottom-width: 1px;
+}
+
+.positive {
+    color: green;
+}
+
+.date {
+    font: bold 15px Serif;
+    margin-top: 25px;
 }
