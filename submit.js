@@ -47,6 +47,15 @@ function getTypeCheckedButton() {
     return checked[0];
 }
 
+function validateCategory(category) {
+    let errors = document.getElementById("errors");
+    if (category === "") {
+        errors.innerText = "Введите категорию";
+        return false;
+    }
+    return true;
+}
+
 function validateForm() {
     let errors = document.getElementById("errors");
     let input_sum = document.getElementById("input_sum").value;
@@ -61,6 +70,10 @@ function validateForm() {
     }
 
     if (!validateDate(input_date)) {
+        return false;
+    }
+
+    if (!validateCategory(input_category)) {
         return false;
     }
 

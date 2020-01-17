@@ -7,17 +7,19 @@
     <script src="script.js"></script>
     <script src="submit.js"></script>
     <link rel="stylesheet" href="style.css">
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
     <div id="main">
         <p class="heading">Приложение Финансист</p>
         <div id="heading">
-            <p class="label_left">Расходы: <span id="amount_expenses">0</span>₽ <span id="show_expenses_statistics" onclick="return onButtonShowStatistics('expenses')">v</span></p>
+            <p class="label_left">Расходы: <span class="negative" id="amount_expenses">0</span>₽ <span id="show_expenses_statistics" onclick="return onButtonShowStatistics('expenses')">v</span></p>
             <div id="expenses_statistics">
 
             </div>
 
-            <p class="label_left">Доходы: <span id="amount_incomes">0</span>₽ <span id="show_incomes_statistics" onclick="return onButtonShowStatistics('incomes')">v</span></p>
+            <p class="label_left">Доходы: <span class="positive" id="amount_incomes">0</span>₽ <span id="show_incomes_statistics" onclick="return onButtonShowStatistics('incomes')">v</span></p>
             <div id="incomes_statistics">
 
             </div>

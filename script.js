@@ -118,15 +118,51 @@ function fillStatistics() {
     fillHistory();
 }
 
+function getData(type) {
+    let arr = new Map();
+    for (let elem of records.records) {
+        if ((type === "expenses" && elem.amount < 0) || (type === "incomes" && elem.amount > 0)) {
+            let key = elem.category;
+            if (!arr.has(key)) {
+                arr.set(key, 0);
+            }
+            arr.set(key, arr.get(key) + Math.abs(elem.amount));
+        }
+    }
+
+    arr = Array.from(arr.entries());
+    if (arr.length > 0) {
+        return [{
+            values: arr.map(d => d[1]),
+            labels: arr.map(d => d[0]),
+            type: 'pie'
+        }];
+    } else {
+        return null;
+    }
+}
+
+function showStatistics(show, type) {
+    let id = type + "_statistics";
+    if (!show) {
+        let statistics = document.getElementById(id);
+        statistics.innerHTML = "";
+    } else {
+        let data = getData(type);
+        let layout = {height: 300, width: 400};
+        Plotly.newPlot(id, data, layout);
+    }
+}
+
 function onButtonShowStatistics(type) {
     console.log(type);
     let id = "show_" + type + "_statistics";
     let text = document.getElementById(id);
     if (text.innerText === "v") {
-
+        showStatistics(true, type);
         text.innerText = "^";
     } else {
-
+        showStatistics(false, type);
         text.innerText = "v";
     }
 }
