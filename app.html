@@ -5,12 +5,48 @@
     <title>Финансист</title>
     <script src="Records.js"></script>
     <script src="script.js"></script>
+    <script src="submit.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <p>Приложение Финансист</p>
-    <button onclick="return onButtonClick();">Add record</button>
+    <div id="main">
+        <p class="heading">Приложение Финансист</p>
+    </div>
+    <div id="add_new_record">
+        <p class="heading">Добавить новую запись</p>
+        <form id="form">
+            <input id="type_1" type="radio" name="type" value="Income">
+            <label for="type_1">Доход</label>
+
+            <input id="type_2" type="radio" name="type" value="Expense" checked>
+            <label for="type_2">Расход</label>
+
+            <br>
+
+            <label class="label_left" for="input_sum">Сумма: </label>
+            <input id="input_sum" type="text">
+
+            <br>
+
+            <label class="label_left" for="input_date">Выберите дату: </label>
+            <input id="input_date" type="date" name="date_transaction">
+
+            <br>
+
+            <label class="label_left" for="input_category">Категория: </label>
+            <input id="input_category" type="text">
+
+
+            <br>
+            <span id="errors"></span>
+
+            <br>
+            <input type="button" value="Добавить запись" onclick="return validateForm();">
+        </form>
+    </div>
 </body>
 <script>
     addListeners();
+    fillDefaultForm();
 </script>
 </html>
