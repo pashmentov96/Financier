@@ -9,7 +9,7 @@ function addListeners() {
     });
 
     window.addEventListener('beforeunload', function() {
-        console.log("BYE");
+        localStorage.setItem("RECORDS", window.records.toString());
     });
 }
 
@@ -35,12 +35,6 @@ function fillDefaultForm() {
 
     let date = document.getElementById("input_date");
     let now = new Date();
-    console.log("Now: " + dateToString(now));
-    date.value = dateToString(now);
-}
 
-function add(object) {
-    console.log(window.records);
-    records.add(object);
-    console.log(window.records);
+    date.value = dateToString(now);
 }
