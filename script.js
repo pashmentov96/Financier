@@ -182,9 +182,9 @@ function updateStatistics(type) {
             console.log(str);
             error.setAttribute("class", str);
 
-            setTimeout(() => resolve(0), 2000);
+            setTimeout(() => resolve(), 2000);
         });
-        promise.then(result => {
+        promise.then(() => {
             let str = error.className + "; hidden";
             error.setAttribute("class", str);
         });
