@@ -25,7 +25,7 @@ input, .label_left, #errors {
     margin-left: 10px;
 }
 
-#errors, .negative {
+#errors, .negative, .errors {
     color: red;
 }
 
@@ -43,4 +43,13 @@ input, .label_left, #errors {
 .date {
     font: bold 15px Serif;
     margin-top: 25px;
+}
+
+.date_interval {
+    float: right;
+    display: inline;
+}
+
+.hidden {
+    display: none;
 }

@@ -28,16 +28,21 @@ function dateToString(date) {
 }
 
 function fillDefaultForm() {
-    let sum = document.getElementById("input_sum");
-    sum.value = "";
+    resetForm();
 
-    let category = document.getElementById("input_category");
-    category.value = "";
-
-    let date = document.getElementById("input_date");
     let now = new Date();
 
-    date.value = dateToString(now);
+    document.getElementById("expenses_start_interval").min = "1970-01-01";
+    document.getElementById("expenses_start_interval").max = dateToString(now);
+    document.getElementById("expenses_start_interval").value = "";
+    document.getElementById("expenses_finish_interval").value = dateToString(now);
+    document.getElementById("expenses_finish_interval").max = dateToString(now);
+
+    document.getElementById("incomes_start_interval").min = "1970-01-01";
+    document.getElementById("incomes_start_interval").max = dateToString(now);
+    document.getElementById("incomes_start_interval").value = "";
+    document.getElementById("incomes_finish_interval").value = dateToString(now);
+    document.getElementById("incomes_finish_interval").max = dateToString(now);
 }
 
 function compare(a, b) {
@@ -118,10 +123,10 @@ function fillStatistics() {
     fillHistory();
 }
 
-function getData(type) {
+function getData(type, start, finish) {
     let arr = new Map();
     for (let elem of records.records) {
-        if ((type === "expenses" && elem.amount < 0) || (type === "incomes" && elem.amount > 0)) {
+        if (((type === "expenses" && elem.amount < 0) || (type === "incomes" && elem.amount > 0)) && (start <= elem.date && elem.date <= finish)) {
             let key = elem.category;
             if (!arr.has(key)) {
                 arr.set(key, 0);
@@ -142,16 +147,92 @@ function getData(type) {
     }
 }
 
+function updateStatistics(type) {
+    let dates = document.getElementById(type + "_dates");
+    let str = dates.className;
+    if (str.indexOf("hidden") !== -1) {
+        return ;
+    }
+
+    let id = type + "_statistics";
+    let start = document.getElementById(type + "_start_interval").value;
+    let finish = document.getElementById(type + "_finish_interval").value;
+
+    if (start === "") {
+        start = "1970-01-01";
+    }
+
+    if (finish === "") {
+        return ;
+    }
+
+    let data = getData(type, start, finish);
+    let layout = {height: 300, width: 400};
+    if (data != null) {
+        let sum = data[0].values.reduce((sum, current) => sum + current, 0);
+        let amount_sum = document.getElementById("amount_" + type);
+        amount_sum.innerText = sum.toString();
+
+        Plotly.newPlot(id, data, layout);
+    } else {
+        let error = document.getElementById(type + "_interval_error");
+        let promise = new Promise(resolve => {
+            let str = error.className;
+            str = str.slice(0, str.indexOf("hidden") - 2);
+            console.log(str);
+            error.setAttribute("class", str);
+
+            setTimeout(() => resolve(0), 2000);
+        });
+        promise.then(result => {
+            let str = error.className + "; hidden";
+            error.setAttribute("class", str);
+        });
+    }
+}
+
 function showStatistics(show, type) {
+    let dates = document.getElementById(type + "_dates");
+    let str = dates.className;
+    console.log(str);
+
     let id = type + "_statistics";
     if (!show) {
         let statistics = document.getElementById(id);
         statistics.innerHTML = "";
+
+        str = str + "; hidden";
+        console.log(str);
+        dates.setAttribute("class", str);
     } else {
-        let data = getData(type);
-        let layout = {height: 300, width: 400};
-        Plotly.newPlot(id, data, layout);
+        str = str.slice(0, str.indexOf("hidden") - 2);
+        console.log(str);
+        dates.setAttribute("class", str);
+        updateStatistics(type);
     }
+}
+
+function onDateIntervalChange(type, is_start) {
+    console.log("Change: " + type + ", " + is_start);
+    let start = document.getElementById(type + "_start_interval");
+    let finish = document.getElementById(type + "_finish_interval");
+    console.log("START: " + start.value);
+    console.log("FINISH: " + finish.value);
+    if (is_start === 1) {
+        if (start.value === "") {
+            finish.min = "1970-01-01";
+        } else {
+            finish.min = start.value;
+        }
+    } else {
+        if (finish.value === "") {
+            let now = new Date();
+            start.max = dateToString(now);
+        } else {
+            start.max = finish.value;
+        }
+    }
+    updateStatistics(type);
 }
 
 function onButtonShowStatistics(type) {

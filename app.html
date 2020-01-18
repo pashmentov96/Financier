@@ -15,13 +15,49 @@
         <p class="heading">Приложение Финансист</p>
         <div id="heading">
             <p class="label_left">Расходы: <span class="negative" id="amount_expenses">0</span>₽ <span id="show_expenses_statistics" onclick="return onButtonShowStatistics('expenses')">v</span></p>
-            <div id="expenses_statistics">
+            <div>
+                <div class="date_interval; hidden" id="expenses_dates">
+                    <p>Выберите интервал для расходов: </p>
 
+                    <br>
+
+                    <label for="expenses_start_interval">Начало: </label>
+                    <input id="expenses_start_interval" type="date" onchange="return onDateIntervalChange('expenses', 1);">
+
+                    <br>
+
+                    <label for="expenses_finish_interval">Конец: </label>
+                    <input id="expenses_finish_interval" type="date" onchange="return onDateIntervalChange('expenses', 0);">
+
+                    <br>
+                    <p id="expenses_interval_error" class="errors; hidden">Пустой интервал</p>
+                </div>
+                <div id="expenses_statistics">
+
+                </div>
             </div>
 
             <p class="label_left">Доходы: <span class="positive" id="amount_incomes">0</span>₽ <span id="show_incomes_statistics" onclick="return onButtonShowStatistics('incomes')">v</span></p>
-            <div id="incomes_statistics">
+            <div>
+                <div class="date_interval; hidden" id="incomes_dates">
+                    <p>Выберите интервал для доходов: </p>
 
+                    <br>
+
+                    <label for="incomes_start_interval">Начало: </label>
+                    <input id="incomes_start_interval" type="date" onchange="return onDateIntervalChange('incomes', 1);">
+
+                    <br>
+
+                    <label for="incomes_finish_interval">Конец: </label>
+                    <input id="incomes_finish_interval" type="date" onchange="return onDateIntervalChange('incomes', 0);">
+
+                    <br>
+                    <p id="incomes_interval_error" class="errors; hidden">Пустой интервал</p>
+                </div>
+                <div id="incomes_statistics">
+
+                </div>
             </div>
         </div>
         <br>
@@ -59,7 +95,7 @@
 
             <br>
 
-            <input type="submit" value="Добавить запись">
+            <input type="button" value="Добавить запись" onclick="return validateForm();">
             <!--
             <input type="button" value="Добавить запись" onclick="return validateForm();">
             <input type="submit" value="Добавить запись" onsubmit="return validateForm();">

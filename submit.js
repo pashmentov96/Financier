@@ -29,11 +29,30 @@ function validateDate(date) {
     return true;
 }
 
+function resetForm() {
+    let sum = document.getElementById("input_sum");
+    sum.value = "";
+
+    let category = document.getElementById("input_category");
+    category.value = "";
+
+    let date_add = document.getElementById("input_date");
+    let now = new Date();
+
+    date_add.value = dateToString(now);
+    date_add.min = "1970-01-01";
+    date_add.max = dateToString(now);
+}
+
 function addRecord(object) {
     records.add(object);
     fillStatistics();
+    resetForm();
     localStorage.setItem("RECORDS", records.toString());
     console.log(records);
+
+    updateStatistics("incomes");
+    updateStatistics("expenses");
 }
 
 function getTypeCheckedButton() {
