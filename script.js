@@ -236,7 +236,11 @@ function onDateIntervalChange(type, is_start) {
 }
 
 function onButtonShowStatistics(type) {
-    console.log(type);
+    console.log("onButtonShowStatistics: " + type);
+    let amount = document.getElementById("amount_" + type).innerText;
+    if (amount === "0") {
+        return ;
+    }
     let id = "show_" + type + "_statistics";
     let text = document.getElementById(id);
     if (text.innerText === "v") {
